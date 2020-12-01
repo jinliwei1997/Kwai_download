@@ -25,6 +25,6 @@ Click F12 and find elements, choose ‘body’, copy and paste it into file 'ele
 
 ![5](img/5.png)
 
-python download.py -r <root>
+python download.py -r \<root\>
 
-If not specified, root is default as './<keyword>'. 
+If not specified, root is default as './\<keyword\>'. 
