@@ -1,6 +1,12 @@
+# This crawler download Kwai short-videos by search a certain topic keyword.
+# It simply reads html elements string from 'element.txt',
+# which is collected by manually copy the elements of the certain search result page,
+# and then parses short-video links to download.
+# To get more details, please refer to 'README.md'.
+
 import requests
 import os
-
+import argparse
 def downloadVideo(url,root,id):
     # url = 'https://aweme.snssdk.com/aweme/v1/playwm/?video_id=v0200f9f0000brm8f726tgqapf007a00&ratio=720p&line=0'
     headers = {
@@ -25,6 +31,7 @@ def downloadVideo(url,root,id):
             print("文件已存在")
     except:
         print("爬取失败")
+    print()
 
 def geturl(html_string):
     try:
@@ -36,13 +43,13 @@ def geturl(html_string):
     except:
         return ""
 
-def get_html_string_list_from_elements_file(root=None):
+def download(root=None):
     headers = {
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36',
     }
 
     prefix = "https://video.kuaishou.com/"
-    f = open('file.txt','r',encoding='utf-8')
+    f = open('element.txt','r',encoding='utf-8')
 
     s = ''.join(f.readlines())
 
@@ -57,6 +64,7 @@ def get_html_string_list_from_elements_file(root=None):
 
     while(1):
         st = s.find('short-video',p)
+        print(f'parse cursor position: {st}')
         if st==-1:
             return
         sla = s.find('/',st)
@@ -68,12 +76,13 @@ def get_html_string_list_from_elements_file(root=None):
         url = geturl(r.content.decode("unicode_escape"))
         downloadVideo(url, root, id)
 
-        p = ed + 1
+        p = st+1
 
     return
 
-
+parser = argparse.ArgumentParser(description="Kwai_download_args")
+parser.add_argument('--root','-r',default=None)
 
 if __name__ == '__main__':
-
-    get_html_string_list_from_elements_file()
+    args=parser.parse_args()
+    download(args.root)
