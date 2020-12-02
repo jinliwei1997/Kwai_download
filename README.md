@@ -1,7 +1,7 @@
 # Kwai_download
 This crawler downloads Kwai short-videos by **searching a certain topic keyword**.
 
-## User guidance
+## User Guide
 
 Use MS Edge or Chrome browser to open [快手 (kuaishou.com)](https://video.kuaishou.com/). 
 
